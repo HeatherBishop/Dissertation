@@ -5,30 +5,66 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Start.unity
-    guid: 57df1e417250bc247976c2c0dc088efe
+    path: Assets/scene01.unity
+    guid: 55fcf02460f61784aa9848cecbb6e7c3
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Zone1.unity
-    guid: a94cb8f134bf81349ad016c79b629e3d
+    path: Assets/scene02.unity
+    guid: d4a0ecac289721241bbe3b0239c19feb
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Zone2.unity
-    guid: 5436c67e9267f17458b31fcdc20cd20a
+    path: Assets/scene03.unity
+    guid: b1ca49b0c9c78ab4fa1bd1e7e052679a
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Zone3.unity
-    guid: 4b4b0e246fc7dbb4295a38fd03241362
+    path: Assets/scene04.unity
+    guid: 79f1632ede78fba4da790e7c51859c34
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Zone4.unity
-    guid: 5b0c2d9ddd151ba489db19a4fb634327
+    path: Assets/SCENE05.unity
+    guid: 83968d6879a146949a4dcf6e87d0654e
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/Zone5.unity
-    guid: 960b12f881940d84983273421bebc695
+    path: Assets/scene06.unity
+    guid: acaa3d518801fc447b749d552864a937
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/UI/UIMenus.unity
-    guid: 705f1f73151a73046842d4e4ec8f514d
+    path: Assets/scene07.unity
+    guid: b98df329eea9b364690314aafc435af5
   - enabled: 1
-    path: Assets/2DGamekit/Scenes/UI/Loading.unity
-    guid: ebc4647ff02971c4ba1b207af066be4d
+    path: Assets/scene08.unity
+    guid: 8233f65a6bc6d1b4dae1f098763cbf51
   - enabled: 1
-    path: Assets/test.unity
-    guid: f952f62f0780da245a5afdc88ace4b57
+    path: Assets/scene09.unity
+    guid: 9254499598a07734e94d81b6afb831e4
+  - enabled: 1
+    path: Assets/scene10.unity
+    guid: 08d4efe0fc321604fbfcf1fdeca389cc
+  - enabled: 1
+    path: Assets/scene11.unity
+    guid: 7af74cde7e6fd31419da81cc5c7269d6
+  - enabled: 1
+    path: Assets/scene12.unity
+    guid: fca1f4b3570e2b3489b9cae7f746f05e

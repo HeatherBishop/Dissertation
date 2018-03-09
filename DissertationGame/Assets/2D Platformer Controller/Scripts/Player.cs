@@ -55,10 +55,10 @@ public class Player : MonoBehaviour
     public Text sisterDialogue;
     public Text playerDialogue;
 
-    public string sister01 = "It's too risky. I don't trust it.";
+    public string sister01 = "Stop giving me your light. It's too risky. I don't trust it.";
     public string player01 = "Please, trust me.";
 
-    public string sister02 = "Why does it always come to this!?";
+    public string sister02 = "Why do you keep doing this!?";
     public string player02 = "Take your damn light!";
 
     public string sister03 = "Brother, please! You can't convince me.";
@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
     //sister AI
     public GameObject sisterObj;
     public bool sisterMove;
+    public bool carrySister;
+    public GameObject sisterTarget;
 
 
     //animation controller
@@ -113,8 +115,14 @@ public class Player : MonoBehaviour
             {
                 //set that objects transform to the shoot from transform
                 lightObj.transform.position = lightTarget.transform.position;
+               // moveSpeed = 4f;
 
             }
+            if (carrySister)
+            {
+                sisterTarget.SetActive(true);
+            }
+           
         }
  
 
@@ -240,12 +248,28 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "Finish")
         {
-            isCarrying = false;
+
             collision.gameObject.GetComponent<Collider2D>().enabled = false;
-            lightObj = null;
+
 
          
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        if (collision.gameObject.tag == "Drop")
+        {
+            playerMove = false;
+            isCarrying = false;
+            lightObj = null;
+            sisterDialogue.GetComponent<TextController>().fullText = ".....";
+            sisterDialogue.GetComponent<TextController>().StartShowText();
+            playerDialogue.GetComponent<PlayetTextController>().fullText = "";
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+        }
+
+        if (collision.gameObject.tag == "Sister")
+        {
+            carrySister = true;
+            sisterObj.SetActive(false);
         }
 
         //if collide with water die and restart
@@ -265,9 +289,16 @@ public class Player : MonoBehaviour
         {
 
             playerMove = false;
-            playerDialogue.GetComponent<TextController>().playerFullText = player01;
+            isCarrying = false;
+            lightObj = null;
+          //  sisterDialogue.text = sister01;
+         //   playerDialogue.text = player01;
+         //   playerDialogue.GetComponent<TextController>().fullText = player01;
             sisterDialogue.GetComponent<TextController>().fullText = sister01;            
             sisterDialogue.GetComponent<TextController>().StartShowText();
+            playerDialogue.GetComponent<PlayetTextController>().fullText = player01;
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            
             Debug.Log("End 01");
             
 
@@ -275,47 +306,70 @@ public class Player : MonoBehaviour
         }
 
         if (collision.gameObject.tag == "02")
+
         {
+            playerMove = false;
+            isCarrying = false;
+            lightObj = null;
 
-            playerDialogue.GetComponent<TextController>().fullText = player02;
 
-
-            sisterDialogue.GetComponent<TextController>().fullText = sister02;
-            
+            sisterDialogue.GetComponent<TextController>().fullText = sister02;            
             sisterDialogue.GetComponent<TextController>().StartShowText();
+            playerDialogue.GetComponent<PlayetTextController>().fullText = player02;
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
             //sister ai - sister walks away
-            
+
         }
 
         if (collision.gameObject.tag == "03")
         {
+            playerMove = false;
+            isCarrying = false;
+            lightObj = null;
 
-            playerDialogue.GetComponent<TextController>().fullText = player03;
-            sisterDialogue.GetComponent<TextController>().fullText = sister03;
-          
+            sisterDialogue.GetComponent<TextController>().fullText = sister03;          
             sisterDialogue.GetComponent<TextController>().StartShowText();
-          //sister ai - sister is dizzy, then walks away slowly
+
+            playerDialogue.GetComponent<PlayetTextController>().fullText = player03;
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            //sister ai - sister is dizzy, then walks away slowly
         }
         if (collision.gameObject.tag == "04")
         {
+            playerMove = false;
+            isCarrying = false;
+            lightObj = null;
 
-            playerDialogue.GetComponent<TextController>().fullText = player04;
             sisterDialogue.GetComponent<TextController>().fullText = sister04;
            
             sisterDialogue.GetComponent<TextController>().StartShowText();
-           //sister ai - sister is hurt and falls and crawls.
+
+            playerDialogue.GetComponent<PlayetTextController>().fullText = player04;
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            //sister ai - sister is hurt and falls and crawls.
         }
         if (collision.gameObject.tag == "05")
         {
+            sisterTarget.SetActive(false);
+            sisterObj.SetActive(true);
+            playerMove = false;
+            isCarrying = false;
 
-           //sister ai - sister is laid and is carried.
-        }
-        if (collision.gameObject.tag == "06")
-        {
-            playerDialogue.GetComponent<TextController>().fullText = player05;
+            lightObj = null;
             sisterDialogue.GetComponent<TextController>().fullText = sister05;
 
             sisterDialogue.GetComponent<TextController>().StartShowText();
+
+            playerDialogue.GetComponent<PlayetTextController>().fullText = player05;
+            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            //sister ai - sister is laid and is carried.
+        }
+        if (collision.gameObject.tag == "06")
+        {
+            playerMove = false;
+            isCarrying = false;
+            lightObj = null;
+
             //sister ai - sister is laid on altar, brother gives her light.
         }
     }
