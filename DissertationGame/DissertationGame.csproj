@@ -240,6 +240,7 @@
     <Compile Include="Assets\2D Platformer Controller\Scripts\PlayerInput.cs" />
     <Compile Include="Assets\2D Platformer Controller\Scripts\RaycastController.cs" />
     <Compile Include="Assets\2D Platformer Controller\Scripts\RaycastGun.cs" />
+    <Compile Include="Assets\Gamecontroller.cs" />
     <Compile Include="Assets\Narrate\Demos\2DDemo\Scripts\Elevator.cs" />
     <Compile Include="Assets\Narrate\Demos\2DDemo\Scripts\Generator.cs" />
     <Compile Include="Assets\Narrate\Demos\2DDemo\Scripts\GeneratorManager.cs" />

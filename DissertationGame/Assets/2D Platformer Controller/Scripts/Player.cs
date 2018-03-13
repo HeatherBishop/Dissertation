@@ -55,20 +55,21 @@ public class Player : MonoBehaviour
     public Text sisterDialogue;
     public Text playerDialogue;
 
-    public string sister01 = "Stop giving me your light. It's too risky. I don't trust it.";
+    public string sister01 = "They escaped from the West.";
     public string player01 = "Please, trust me.";
 
-    public string sister02 = "Why do you keep doing this!?";
+    public string sister02 = "But is wasn't long before it followed them here too.";
     public string player02 = "Take your damn light!";
 
-    public string sister03 = "Brother, please! You can't convince me.";
+    public string sister03 = "Afraid and distrustful, she ran from his Light.";
     public string player03 = "Don't give up, we're nearly there.";
 
-    public string sister04 = "I deserve this... You can't save me.";
+    public string sister04 = "Their world shrank until it was just the two of them.";
     public string player04 = "Please, someone help us!";
 
     public string sister05 = "Thank you, my brother.";
     public string player05 = "Take my light.";
+    public string sister06 = "Thank you, my brother.";
 
     public int level;
 
@@ -77,18 +78,39 @@ public class Player : MonoBehaviour
     //sister AI
     public GameObject sisterObj;
     public bool sisterMove;
+    public float sisterMoveSpeed;
     public bool carrySister;
-    public GameObject sisterTarget;
+    public GameObject sisterTarget; //carrying
+    public GameObject sisterWalk;
+    public GameObject sisterHazard;
+
+    //Run away sisters
+    public GameObject sisterRun;
+    public GameObject sisterWalks;
+    public GameObject sisterDizzy;
+    public GameObject sisterCrawl;
+    public GameObject sisterAlter;
 
 
     //animation controller
     public Animator anim;
 
+    //boat the enters at beginning
+    public GameObject boatPlayer;
+
     private void Start()
     {
+        sisterMoveSpeed = 1f;
         anim = GetComponent<Animator>();
-        sisterObj = GameObject.FindGameObjectWithTag("Sister");
-        playerMove = true;
+        //sisterObj = GameObject.FindGameObjectWithTag("Sister");
+        sisterMove = false;
+
+        //set movement and visibility to false until boat has arrived.
+        playerMove = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        sisterWalk.SetActive(false);
+
+
         controller = GetComponent<Controller2D>();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -122,12 +144,16 @@ public class Player : MonoBehaviour
             {
                 sisterTarget.SetActive(true);
             }
+            else {
+                sisterTarget.SetActive(false);
+            }
            
         }
  
 
         if (sisterMove)
         {
+            sisterMoveSpeed = sisterMoveSpeed * Time.deltaTime;
             sisterObj.transform.position += new Vector3(5, 0, 0) * Time.deltaTime;
         }
     }
@@ -227,6 +253,23 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        //collide with boat , player can move and is visible. boat player invisible.
+        if (collision.gameObject.tag == "Boat")
+        {
+            sisterDialogue.GetComponent<TextController>().fullText = sister01;
+            sisterDialogue.GetComponent<TextController>().StartShowText();
+            //disable objects on boat
+            collision.transform.GetChild(0).gameObject.SetActive(false);
+            //player can move, sister child obj is active.#
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+            playerMove = true;
+            sisterWalk.SetActive(true);
+            
+        }
+
+
         //collect ammo
 
         if (collision.gameObject.tag == "Ammo")
@@ -259,6 +302,7 @@ public class Player : MonoBehaviour
         {
             playerMove = false;
             isCarrying = false;
+            
             lightObj = null;
             sisterDialogue.GetComponent<TextController>().fullText = ".....";
             sisterDialogue.GetComponent<TextController>().StartShowText();
@@ -269,7 +313,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Sister")
         {
             carrySister = true;
-            sisterObj.SetActive(false);
+            sisterHazard.SetActive(false);
+           // sisterObj.SetActive(false);
         }
 
         //if collide with water die and restart
@@ -285,20 +330,26 @@ public class Player : MonoBehaviour
             collision.GetComponent<SpriteRenderer>().sprite = checkpointActive;
         }
 
+
+
+        //sister gets hurt. world turns dark, she starts to run
+
         if (collision.gameObject.tag == "01")
         {
 
             playerMove = false;
-            isCarrying = false;
-            lightObj = null;
-          //  sisterDialogue.text = sister01;
-         //   playerDialogue.text = player01;
-         //   playerDialogue.GetComponent<TextController>().fullText = player01;
-            sisterDialogue.GetComponent<TextController>().fullText = sister01;            
+            //  isCarrying = false;
+            //  lightObj = null;
+           
+            sisterWalk.SetActive(false);
+            sisterHazard.SetActive(true);
+            sisterHazard.GetComponent<Animation>().Play("NPC_dizzy");
+            sisterObj = null;
+
+            sisterDialogue.GetComponent<TextController>().fullText = sister02;            
             sisterDialogue.GetComponent<TextController>().StartShowText();
-            playerDialogue.GetComponent<PlayetTextController>().fullText = player01;
-            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
-            
+
+            collision.gameObject.SetActive(false);
             Debug.Log("End 01");
             
 
@@ -311,65 +362,87 @@ public class Player : MonoBehaviour
             playerMove = false;
             isCarrying = false;
             lightObj = null;
+             carrySister = false;
+            sisterTarget.SetActive(false);
+            
+            //screen 3
+            sisterObj = sisterRun;
+            sisterObj.GetComponent<Animation>().Play("NPC_run");
+            sisterRun.SetActive(true);
+            
+            
 
-
-            sisterDialogue.GetComponent<TextController>().fullText = sister02;            
+            sisterDialogue.GetComponent<TextController>().fullText = sister03;            
             sisterDialogue.GetComponent<TextController>().StartShowText();
-            playerDialogue.GetComponent<PlayetTextController>().fullText = player02;
-            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
-            //sister ai - sister walks away
 
+            //  playerDialogue.GetComponent<PlayetTextController>().fullText = player02;
+            //  playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            //sister ai - sister walks away
+            collision.gameObject.SetActive(false);
         }
 
         if (collision.gameObject.tag == "03")
         {
+            sisterDizzy.SetActive(true);
+            sisterObj = sisterDizzy;
+            sisterObj.GetComponent<Animation>().Play("NPC_dizzy");
             playerMove = false;
             isCarrying = false;
             lightObj = null;
 
-            sisterDialogue.GetComponent<TextController>().fullText = sister03;          
+
+            
+
+
+            sisterDialogue.GetComponent<TextController>().fullText = sister04;          
             sisterDialogue.GetComponent<TextController>().StartShowText();
 
-            playerDialogue.GetComponent<PlayetTextController>().fullText = player03;
-            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            // playerDialogue.GetComponent<PlayetTextController>().fullText = player03;
+            //  playerDialogue.GetComponent<PlayetTextController>().StartShowText();
             //sister ai - sister is dizzy, then walks away slowly
+            collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.tag == "04")
         {
+            sisterCrawl.SetActive(true);
+           // sisterObj = sisterCrawl;
+            //sisterObj.GetComponent<Animation>().Play("NPC_hurt");
             playerMove = false;
             isCarrying = false;
             lightObj = null;
 
-            sisterDialogue.GetComponent<TextController>().fullText = sister04;
+            sisterDialogue.GetComponent<TextController>().fullText = sister05;
            
             sisterDialogue.GetComponent<TextController>().StartShowText();
+            sisterCrawl.SetActive(false);
+            collision.gameObject.SetActive(false);
 
-            playerDialogue.GetComponent<PlayetTextController>().fullText = player04;
-            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
             //sister ai - sister is hurt and falls and crawls.
         }
         if (collision.gameObject.tag == "05")
         {
             sisterTarget.SetActive(false);
-            sisterObj.SetActive(true);
+            sisterAlter.SetActive(true);
+           // sisterObj = sisterAlter;
             playerMove = false;
             isCarrying = false;
 
             lightObj = null;
-            sisterDialogue.GetComponent<TextController>().fullText = sister05;
+            sisterDialogue.GetComponent<TextController>().fullText = sister06;
 
             sisterDialogue.GetComponent<TextController>().StartShowText();
 
-            playerDialogue.GetComponent<PlayetTextController>().fullText = player05;
-            playerDialogue.GetComponent<PlayetTextController>().StartShowText();
+            //  playerDialogue.GetComponent<PlayetTextController>().fullText = player05;
+            // playerDialogue.GetComponent<PlayetTextController>().StartShowText();
             //sister ai - sister is laid and is carried.
+            collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.tag == "06")
         {
             playerMove = false;
             isCarrying = false;
             lightObj = null;
-
+            collision.gameObject.SetActive(false);
             //sister ai - sister is laid on altar, brother gives her light.
         }
     }

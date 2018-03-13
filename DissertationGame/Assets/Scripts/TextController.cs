@@ -36,8 +36,19 @@ public class TextController : MonoBehaviour {
         StartCoroutine(ShowSisterText());
         yield return new WaitForSeconds(2f);
 
-        player.GetComponent<Player>().sisterMove = true;
+        if (player.GetComponent<Player>().sisterObj != null)
+        {
+            player.GetComponent<Player>().sisterMove = true;
+
+        }
+
         yield return new WaitForSeconds(2f);
+        player.GetComponent<Player>().playerMove = true;
+
+        if(player.GetComponent<Player>().sisterObj != null)
+        player.GetComponent<Player>().sisterObj.SetActive(false);
+
+        player.GetComponent<Player>().sisterObj = null;
 
     }
 

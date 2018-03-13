@@ -10,3 +10,15 @@ After a few seconds the player text appears in response.
 The player leaves to the right of the screen.
 
 
+// player and sister are walking and playing if sun.
+// sun turns to dusk, sister gets sick.
+// player picks up carrys and tries to give sister light, 
+   but as she does the players light dims
+// she runs away
+// player chases, but each time she refuses the light.
+// gets sicker until she is crawling and stops.
+// player picks her up and carrys her. 
+// carrys her to alter and gives her light.
+// player dies sister lives? player lives sister dies? Both live? Both die?
+
+

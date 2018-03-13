@@ -19,6 +19,9 @@ TagManager:
   - 05
   - Sister
   - Drop
+  - Boat
+  - Sister01
+  - 06
   layers:
   - Default
   - TransparentFX
