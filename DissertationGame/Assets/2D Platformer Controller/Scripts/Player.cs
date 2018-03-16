@@ -137,9 +137,12 @@ public class Player : MonoBehaviour
             {
                 //set that objects transform to the shoot from transform
                 lightObj.transform.position = lightTarget.transform.position;
+
+
                // moveSpeed = 4f;
 
             }
+            
             if (carrySister)
             {
                 sisterTarget.SetActive(true);
@@ -313,7 +316,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Sister")
         {
             carrySister = true;
-            sisterHazard.SetActive(false);
+            collision.gameObject.SetActive(false);
            // sisterObj.SetActive(false);
         }
 
@@ -414,18 +417,19 @@ public class Player : MonoBehaviour
             sisterDialogue.GetComponent<TextController>().fullText = sister05;
            
             sisterDialogue.GetComponent<TextController>().StartShowText();
-            sisterCrawl.SetActive(false);
+           // sisterCrawl.SetActive(false);
             collision.gameObject.SetActive(false);
 
             //sister ai - sister is hurt and falls and crawls.
         }
         if (collision.gameObject.tag == "05")
         {
+            isCarrying = false;
             sisterTarget.SetActive(false);
             sisterAlter.SetActive(true);
            // sisterObj = sisterAlter;
             playerMove = false;
-            isCarrying = false;
+
 
             lightObj = null;
             sisterDialogue.GetComponent<TextController>().fullText = sister06;
